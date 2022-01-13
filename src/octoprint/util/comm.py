@@ -489,6 +489,7 @@ class MachineCom(object):
         self._logger = logging.getLogger(__name__)
         self._serialLogger = logging.getLogger("SERIAL")
         self._phaseLogger = logging.getLogger(__name__ + ".command_phases")
+        self._fflosi = logging.getLogger(__name__ + ".fflosi")
 
         if port is None:
             port = settings().get(["serial", "port"])
@@ -3358,7 +3359,7 @@ class MachineCom(object):
         # Ensure we have at least one line in the send queue, but don't spam it
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
-            self._phaseLogger.debug(
+            self._fflosi.debug(
                 "self._send_queue.qsize() = " + str(self._send_queue.qsize())
             )
             job_active = self._state in (
