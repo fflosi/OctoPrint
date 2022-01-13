@@ -4438,6 +4438,7 @@ class MachineCom(object):
                     continue
 
                 try:
+                    self._fflosi.debug("_send_loop - Try Entry")
                     # make sure we are still active
                     if not self._send_queue_active:
                         break
@@ -4548,6 +4549,8 @@ class MachineCom(object):
                         subcode=subcode,
                         tags=tags,
                     )
+                except Exception:
+                    self._fflosi.debug("_send_loop after - Exception")
 
                 finally:
                     # no matter _how_ we exit this block, we signal that we
