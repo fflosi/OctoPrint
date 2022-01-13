@@ -3360,7 +3360,7 @@ class MachineCom(object):
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
             self._fflosi.debug("self._send_queue.qsize() = " + str(self._send_queue.qsize()))
-            self._fflosi.debug("self._ack_max = " + str(self._ack_max) + "  _clear_to_send = " + str(self._clear_to_send.counter))
+            self._fflosi.debug("self._ack_max = " + str(self._ack_max) + "  _clear_to_send = " + str(self._clear_to_send._counter))
             job_active = self._state in (
                 self.STATE_STARTING,
                 self.STATE_PRINTING,
