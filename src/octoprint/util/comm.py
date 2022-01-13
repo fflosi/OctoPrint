@@ -4429,7 +4429,9 @@ class MachineCom(object):
             try:
                 # wait until we have something in the queue
                 try:
+                    self._fflosi.debug("_send_loop - BEFORE _send_queue.get() - self._send_queue.qsize() = " + str(self._send_queue.qsize()))
                     entry = self._send_queue.get()
+                    self._fflosi.debug("_send_loop - AFTER _send_queue.get() - self._send_queue.qsize() = " + str(self._send_queue.qsize()))
                 except queue.Empty:
                     self._fflosi.debug("_send_loop - Queue Empty = ")
                     # I haven't yet been able to figure out *why* this can happen but according to #3096 and SERVER-2H
