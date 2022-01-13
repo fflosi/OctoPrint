@@ -3359,9 +3359,8 @@ class MachineCom(object):
         # Ensure we have at least one line in the send queue, but don't spam it
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
-            self._fflosi.debug(
-                "self._send_queue.qsize() = " + str(self._send_queue.qsize())
-            )
+            self._fflosi.debug("self._send_queue.qsize() = " + str(self._send_queue.qsize()))
+            self._fflosi.debug("self._ack_max = " + str(self._ack_max))
             job_active = self._state in (
                 self.STATE_STARTING,
                 self.STATE_PRINTING,
