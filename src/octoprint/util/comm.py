@@ -3359,8 +3359,8 @@ class MachineCom(object):
         # Ensure we have at least one line in the send queue, but don't spam it
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
-            self._fflosi.debug("self._send_queue.qsize() = " + str(self._send_queue.qsize()))
-            self._fflosi.debug("self._ack_max = " + str(self._ack_max) + "  _clear_to_send = " + str(self._clear_to_send._counter))
+            self._fflosi.debug("_continue_sending - self._send_queue.qsize() = " + str(self._send_queue.qsize()))
+            self._fflosi.debug("_continue_sending - self._ack_max = " + str(self._ack_max) + "  _clear_to_send = " + str(self._clear_to_send._counter))
             job_active = self._state in (
                 self.STATE_STARTING,
                 self.STATE_PRINTING,
@@ -4431,6 +4431,7 @@ class MachineCom(object):
                 try:
                     entry = self._send_queue.get()
                 except queue.Empty:
+                    self._fflosi.debug("_send_loop - Queue Empty = ")
                     # I haven't yet been able to figure out *why* this can happen but according to #3096 and SERVER-2H
                     # an Empty exception can fly here due to resend_active being True but nothing being in the resend
                     # queue of the send queue. So we protect against this possibility...
@@ -4524,8 +4525,11 @@ class MachineCom(object):
                             continue
 
                         # now comes the part where we increase line numbers and send stuff - no turning back now
+                        self._fflosi.debug("_send_loop - self._send_queue.qsize() = " + str(self._send_queue.qsize()))
+                        self._fflosi.debug("_send_loop - _clear_to_send = " + str(self._clear_to_send._counter))
                         used_up_clear = self._use_up_clear(gcode)
                         self._do_send(command, gcode=gcode)
+                        self._fflosi.debug("_send_loop after _do_send - _clear_to_send = " + str(self._clear_to_send._counter))
                         if not used_up_clear:
                             # If we didn't use up a clear we need to tickle the read queue - there might
                             # not be a reply to this command, so our _monitor loop will stay waiting until
