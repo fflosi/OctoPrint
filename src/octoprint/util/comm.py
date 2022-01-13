@@ -3359,7 +3359,7 @@ class MachineCom(object):
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
             self._phaseLogger.debug(
-                "self._send_queue.qsize() = " + self._send_queue.qsize()
+                "self._send_queue.qsize() = " + str(self._send_queue.qsize())
             )
             job_active = self._state in (
                 self.STATE_STARTING,
