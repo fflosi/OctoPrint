@@ -3358,7 +3358,7 @@ class MachineCom(object):
         # Ensure we have at least one line in the send queue, but don't spam it
         # while self._active and not self._send_queue.qsize():
         while self._active and (self._send_queue.qsize() < self._ack_max):
-            self._logger.debug(
+            self._phaseLogger.debug(
                 "self._send_queue.qsize() = " + self._send_queue.qsize()
             )
             job_active = self._state in (
